@@ -1,0 +1,7 @@
+spring:
+  thymeleaf.cache: false
+  main.show-banner: false
+
+server:
+  context-path: /xenios_webservices
+  port: 8080
