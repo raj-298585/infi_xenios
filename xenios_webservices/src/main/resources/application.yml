@@ -4,4 +4,7 @@ spring:
 
 server:
   context-path: /xenios_webservices
-  port: 8080
+  port: 8181
+
+application:
+  file-upload-path:  /home/rajendra/RP/

@@ -16,6 +16,8 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import com.infi.xenios.config.AppProperties;
+
 @Named
 @Path("/upload")
 public class FileUploadController {
@@ -26,22 +28,17 @@ public class FileUploadController {
 	public Response uploadFile(@DefaultValue("") @FormDataParam("tags") String tags,
 			@FormDataParam("file") InputStream file,
 			@FormDataParam("file") FormDataContentDisposition fileDisposition) {
-
 		String fileName = fileDisposition.getFileName();
-
 		saveFile(file, fileName);
-
-		String fileDetails = "File saved at /Volumes/Drive2/temp/file/" + fileName + " with tags " + tags;
-
+		String fileDetails = "File saved at " + AppProperties.fileUploadPath + fileName + " with tags " + tags;
 		System.out.println(fileDetails);
-
 		return Response.ok(fileDetails).build();
 	}
 
 	private void saveFile(InputStream file, String name) {
 		try {
 			/* Change directory path */
-			java.nio.file.Path path = FileSystems.getDefault().getPath("/Volumes/Drive2/temp/file/" + name);
+			java.nio.file.Path path = FileSystems.getDefault().getPath(AppProperties.fileUploadPath + name);
 			/* Save InputStream as file */
 			Files.copy(file, path);
 		} catch (IOException ie) {
